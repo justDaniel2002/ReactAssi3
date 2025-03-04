@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import SignIn from './pages/SignIn';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<h1>Error</h1>}>
-      <Route path="/" element={<Layout />} >
-        <Route index element={<Home />} />
+      <Route path="/" >
+        <Route index element={<SignIn />} />
       </Route>
     </Route>
   ),
