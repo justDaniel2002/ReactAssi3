@@ -1,19 +1,19 @@
 const Perfume = require("../models/Prefume");
 
 const index = async (req, res, next) => {
-    var { name, brandId } = res.body
-
+    var body = req?.body
+    console.log(body)
     var perfumes = [];
     //call back
-    await Perfume.find()
+    await Perfume.find().populate('brand')
         .then((pfs) => {
             perfumes = pfs;
         })
 
-    if (name) perfumes = perfumes.filter(pf => pf.perfumeName.tolower().contains(name.tolower().trim()));
-    if (brandId) perfumes = perfumes.filter(pf => pf.brand == brandId);
+    if (body?.name) perfumes = perfumes.filter(pf => pf.perfumeName.toLowerCase().includes(body?.name.toLowerCase().trim()));
+    if (body?.brandId && body?.brandId!="All") perfumes = perfumes.filter(pf => pf?.brand?._id == body?.brandId);
 
-    res.status(200).json({ prefume })
+    res.status(200).json({ perfumes })
 }
 
 const getPrefume = async (req, res, next) => {
@@ -32,8 +32,7 @@ const newPrefume = async (req, res, next) => {
 };
 
 const updatePrefume = async (req, res, next) => {
-
-    await Perfume.findByIdAndUpdate(req.params.id, req.body).then((prefume) => {
+    await Perfume.findByIdAndUpdate(req.params.prefumeID, req.body).then((prefume) => {
         return res.status(200).json({ prefume });
     });
 };

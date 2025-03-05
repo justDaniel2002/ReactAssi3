@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { signInApi } from '../apis/APIs';
 import { Link, useNavigate } from 'react-router-dom';
+import { userAtom } from '../../Jotal/atom';
+import { useAtom } from 'jotai';
+import { toast } from 'react-toastify';
 
 export default function SignIn() {
+  const [user, setUser] = useAtom(userAtom)
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
 
@@ -12,9 +16,13 @@ export default function SignIn() {
   const SignIn = async () => {
     const body = { email, password }
 
-    axios.post(signInApi, body).then(() => {
-      navigate('/');
-    }).catch(() => { })
+    await axios.post(signInApi, body).then((data) => {
+      setUser(data.data.user)
+      console.log(data)
+      navigate('/home');
+    }).catch(() => {
+      toast.error('Sign In Failed')
+    })
   }
   return (
     <div className='bg-blue-500 h-screen pt-40'>
@@ -31,7 +39,7 @@ export default function SignIn() {
         <div>
           <div className='my-4 font-medium text-xl'>Password</div>
           <div>
-            <input className='border rounded-xl py-1 px-2 w-full' 
+            <input className='border rounded-xl py-1 px-2 w-full'
               type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)} />

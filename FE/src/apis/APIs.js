@@ -1,10 +1,14 @@
 
-const signInApi = "";
+const baseURL = "http://localhost:3000";
 
-const signUpApi = "";
+const signInApi = baseURL + "/signin";
 
-const getPrefumes = "";
+const signUpApi = baseURL + "/signup";
+
+const PrefumesApi = baseURL + "/prefumes";
+
+const BrandsApi = baseURL + "/brands";
 
 const getPrefumeDetail = "";
 
-export { signInApi, signUpApi, getPrefumes, getPrefumeDetail}
+export { signInApi, signUpApi, PrefumesApi, BrandsApi, getPrefumeDetail}

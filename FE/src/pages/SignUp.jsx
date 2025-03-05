@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { signUpApi } from '../apis/APIs'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function SignUp() {
     const [email, setEmail] = useState()
@@ -9,13 +10,14 @@ export default function SignUp() {
     const [YOB, setYOB] = useState()
     const [gender, setGender] = useState()
 
+    const navigate = useNavigate()
     const SignUp = async () => {
         const body = { email, password, YOB, gender }
 
-        axios.post(signUpApi, body).then(() => {
-
+        await axios.post(signUpApi, body).then(() => {
+            navigate('/');
         }).catch(() => {
-
+            toast.error('Sign Up Failed')
         })
     }
     return (
@@ -54,13 +56,14 @@ export default function SignUp() {
                         <span className='mr-5'>
                             <input type='radio' name='gender'
                                 onChange={e => {
-                                    if (e.checked) setGender(true)
+                                    console.log(e)
+                                    if (e.target.checked) setGender(true)
                                 }}
                             />Male
                         </span>
                         <input type='radio' name='gender'
                             onChange={e => {
-                                if (e.checked) setGender(false)
+                                if (e.target.checked) setGender(false)
                             }} />Female
                     </div>
                 </div>

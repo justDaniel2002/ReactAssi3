@@ -5,6 +5,8 @@ const express = require("express");
 
 const logger = require("morgan");
 
+const cors = require("cors");
+
 const app = express();
 
 const Route = require("./routes/mainRoute");
@@ -20,6 +22,9 @@ const configs = require('./configs')
 const passportConfig = require('./middlewares/passport')
 
 const session = require('express-session')
+
+// Enable CORS
+app.use(cors());
 
 //set session 
 

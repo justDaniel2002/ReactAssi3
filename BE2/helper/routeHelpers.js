@@ -31,10 +31,10 @@ const schemas = {
     }),
 
     authSignUpSchema: Joi.object().keys({
-        firstName: Joi.string().min(2).required(),
-        lastName: Joi.string().min(2).required(),
         email: Joi.string().email().required(),
-        password: Joi.string().min(6).required()
+        password: Joi.string().min(6).required(),
+        YOB: Joi.string(),
+        gender: Joi.boolean()
     }),
 
     authSignInSchema: Joi.object().keys({

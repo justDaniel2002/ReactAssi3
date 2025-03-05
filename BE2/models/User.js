@@ -16,16 +16,14 @@ const UserSchema = new Schema({
         require: true
     },
     YOB:{
-        type: Number,
-        min: [1000,"Year of birth must greater than 1000"],
-        max: [3000,"Year of birth must smaller than 3000"]
+        type: Date,
     },
     gender:{
         type: Boolean
     },
     isAdmin:{
         type: Boolean,
-        default: true
+        default: false
     },
     authType:{
         type: String,

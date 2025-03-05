@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema
 
-const Comment = require('./Comment');
+const Brand = require('./Brand');
+
+const { Comment, commentSchema } = require('./Comment');
 
 const perfumechema = new Schema({
     perfumeName: { type: String, require: true },
@@ -13,8 +15,8 @@ const perfumechema = new Schema({
     ingredients: { type: String, require: true },
     volume: { type: Number, require: true },
     targetAudience: { type: String, require: true },// male, femail, unisex
-    comments: [Comment],
-    brand: { type: Schema.Types.ObjectId, ref: "Brands", require: true },
+    comments: [commentSchema],
+    brand: { type: Schema.Types.ObjectId, ref: "Brand", require: true },
 }, { timestamps: true, });
 
 const Perfume = mongoose.model('Perfume', perfumechema)
