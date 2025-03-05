@@ -66,7 +66,6 @@ export default function Perfumes() {
     }, [])
 
     const getPrefumes = async () => {
-        console.log(bindingPrefumes)
         await axios.post(PrefumesApi+"/search",{name: searchName, brandId: searchBrand}).then((data) => {
             console.log(data.data.perfumes)
             setPrefumes(data.data.perfumes ?? [])
@@ -81,6 +80,14 @@ export default function Perfumes() {
             setBrands(data.data.brands ?? [])
         }).catch(() => {
             toast.error('Failed to get brands')
+        })
+    }
+
+    const deletePrefume = async (id) => {
+        await axios.delete(PrefumesApi + '/' + id).then(() => {
+            getPrefumes()
+        }).catch(() => {
+            toast.error('Failed to delete prefumes')
         })
     }
 
@@ -132,12 +139,18 @@ export default function Perfumes() {
                             <div>{prefume?.brand?.brandName}</div>
 
 
-                            {user?.isAdmin && <button onClick={() => {
+                            {user?.isAdmin && <>
+                                <button onClick={() => {
                                 setBindingPrefumes(prefume)
                                 openModal()
                             }} className='bg-blue-500 text-white px-4 py-1 rounded-lg font-medium my-4'>
                                 Update
-                            </button>}
+                            </button>
+                            <button onClick={() => {
+                                deletePrefume(prefume._id)
+                            }} className='bg-red-500 text-white px-4 py-1 rounded-lg font-medium my-4'>
+                                Delete
+                            </button></>}
                         </div>
                     </>
                 )}
@@ -239,6 +252,7 @@ export default function Perfumes() {
                                 bindingPrefumes.brand = e.target.value
                                 setBindingPrefumes({ ...bindingPrefumes })
                             }}>
+                                <option></option>
                             {brands.map(brand =>
                                 <option value={brand._id}>{brand.brandName}</option>
                             )}
